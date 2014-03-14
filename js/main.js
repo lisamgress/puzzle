@@ -19,7 +19,7 @@ function createPuzzleBoard() {
 	}
 }
 
-function findMoveableTiles(emptyRow, emptyCol) {
+function findMoveableTiles(row, col) {
 	// clear any existing moveable tags
 	$(".tile").removeClass("moveable");
 
@@ -29,33 +29,39 @@ function findMoveableTiles(emptyRow, emptyCol) {
 		var tileRow = parseInt(tile[1][3], 10);
 		var tileCol = parseInt(tile[2][3], 10);
 
-		var emptyTileRow = parseInt(emptyRow[3], 10);
-		var emptyTileCol = parseInt(emptyCol[3], 10);
+		var emptyTileRowNum = parseInt(row[3], 10);
+		var emptyTileColNum = parseInt(col[3], 10);
 
-		if((Math.abs(tileRow - emptyTileRow) == 1 && Math.abs(tileCol - emptyTileCol) == 0 )||
-			(Math.abs(tileRow - emptyTileRow) == 0 && Math.abs(tileCol - emptyTileCol) == 1)) {
+		if((Math.abs(tileRow - emptyTileRowNum) == 1 && Math.abs(tileCol - emptyTileColNum) == 0 )||
+			(Math.abs(tileRow - emptyTileRowNum) == 0 && Math.abs(tileCol - emptyTileColNum) == 1)) {
 			$(this).addClass("moveable");
 		}
 	})
 }
 
-
 $(document).ready(function() {
 	createPuzzleBoard();
 
 	// start game with an empty tile in position (4, 4)
-	var emptyTileRowClass = "row4";
-	var emptyTileColClass = "col4";
+	var emptyTileRow = "row4";
+	var emptyTileCol = "col4";
 
-	findMoveableTiles(emptyTileRowClass, emptyTileColClass);
+	findMoveableTiles(emptyTileRow, emptyTileCol);
 
 	// when a tile is clicked, move it to the location of the empty tile
 	$(".tile").click(function() {
 		var tileCurrentLocation = $(this).attr("class").split(" ");
-		$(this).attr("class", "tile " + emptyTileRowClass + " " + emptyTileColClass);
-		emptyTileRowClass = tileCurrentLocation[1];
-		emptyTileColClass = tileCurrentLocation[2];
-		findMoveableTiles(emptyTileRowClass, emptyTileColClass);
+		var currentTileRow = tileCurrentLocation[1];
+		var currentTileCol = tileCurrentLocation[2];
+
+		// if the tile is moveable, move the tile.
+		// find the new empty tile and the new moveable tiles.
+		if($(this).hasClass("moveable")) {
+			$(this).attr("class", "tile " + emptyTileRow + " " + emptyTileCol);
+			emptyTileRow = currentTileRow;
+			emptyTileCol = currentTileCol;
+			findMoveableTiles(emptyTileRow, emptyTileCol);
+		}
 	})
 })
 
