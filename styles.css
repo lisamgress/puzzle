@@ -49,3 +49,9 @@ body {
 .col4 {
 	left: 300px;
 }
+
+.moveable:hover {
+	border-color: red;
+}
+
+
