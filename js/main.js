@@ -19,9 +19,12 @@ function createPuzzleBoard() {
 	}
 }
 
-function findMoveableTiles(row, col) {
+function findMoveableTiles(emptyTile) {
 	// clear any existing moveable tags
 	$(".tile").removeClass("moveable");
+
+	var row = emptyTile[0];
+	var col = emptyTile[1];
 
 	// check each tile to see if it is moveable and if it is, tag it.
 	$(".tile").each(function() {
@@ -39,29 +42,49 @@ function findMoveableTiles(row, col) {
 	})
 }
 
+function swapTiles(tile, emptyTile) {
+	var tileRow = $(tile).attr("class").split(" ")[1];
+	var tileCol = $(tile).attr("class").split(" ")[2];
+
+	var emptyTileRow = emptyTile[0];
+	var emptyTileCol = emptyTile[1];
+
+	// if the tile is moveable, swap the tile with the empty tile.              
+	// update the empty tile and the moveable tiles.
+	if($(tile).hasClass("moveable")) {
+		$(tile).attr("class", "tile " + emptyTileRow + " " + emptyTileCol);
+		emptyTileRow = tileRow;
+		emptyTileCol = tileCol;
+		findMoveableTiles([emptyTileRow, emptyTileCol]);	
+	}
+	return [emptyTileRow, emptyTileCol];
+}
+
+function shufflePuzzleboard(emptyTile) {
+	for(var i = 0; i <= 1000; i++) {
+		var neighbors = $(".moveable");
+		var randomNeighbor = neighbors[Math.floor(Math.random() * neighbors.length)];
+
+		emptyTile = swapTiles(randomNeighbor, emptyTile)
+	}
+	return emptyTile;
+}
+
 $(document).ready(function() {
-	createPuzzleBoard();
-
 	// start game with an empty tile in position (4, 4)
-	var emptyTileRow = "row4";
-	var emptyTileCol = "col4";
+	var emptyTile = ["row4", "col4"];
+	
+	createPuzzleBoard();
+	findMoveableTiles(emptyTile);
 
-	findMoveableTiles(emptyTileRow, emptyTileCol);
+	// shuffle puzzle board
+	$("#shufflebutton").click(function() {
+		emptyTile = shufflePuzzleboard(emptyTile);
+	})
 
 	// when a tile is clicked, move it to the location of the empty tile
 	$(".tile").click(function() {
-		var tileCurrentLocation = $(this).attr("class").split(" ");
-		var currentTileRow = tileCurrentLocation[1];
-		var currentTileCol = tileCurrentLocation[2];
-
-		// if the tile is moveable, move the tile.
-		// find the new empty tile and the new moveable tiles.
-		if($(this).hasClass("moveable")) {
-			$(this).attr("class", "tile " + emptyTileRow + " " + emptyTileCol);
-			emptyTileRow = currentTileRow;
-			emptyTileCol = currentTileCol;
-			findMoveableTiles(emptyTileRow, emptyTileCol);
-		}
+		emptyTile = swapTiles($(this), emptyTile);
 	})
 })
 
