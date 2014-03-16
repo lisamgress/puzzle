@@ -3,8 +3,8 @@ function createPuzzleBoard() {
 	var colNum;
 
 	for(i = 1; i <= 15; i++) {
-		var newTile = $("<div>" + i + "</div>");
-		newTile.attr("id", i);
+		var newTile = $("<div></div>");
+		newTile.attr("id", "tile" + i);
 		newTile.addClass("tile");
 
 		rowNum = Math.floor((i - 1) / 4) + 1;
@@ -59,7 +59,7 @@ function swapTiles(tile, emptyTile) {
 }
 
 function shufflePuzzleboard(emptyTile) {
-	for(var i = 0; i <= 1000; i++) {
+	for(var i = 0; i <= 10; i++) {
 		var neighbors = $(".moveable");
 		var randomNeighbor = neighbors[Math.floor(Math.random() * neighbors.length)];
 
@@ -70,21 +70,21 @@ function shufflePuzzleboard(emptyTile) {
 
 function checkForWin() {
 	var winningBoard = {
-		1 : ["row1", "col1"],
-		2 : ["row1", "col2"],
-		3 : ["row1", "col3"],
-		4 : ["row1", "col4"],
-		5 : ["row2", "col1"],
-		6 : ["row2", "col2"],
-		7 : ["row2", "col3"],
-		8 : ["row2", "col4"],
-		9 : ["row3", "col1"],
-		10 : ["row3", "col2"],
-		11 : ["row3", "col3"],
-		12 : ["row3", "col4"],
-		13 : ["row4", "col1"],
-		14 : ["row4", "col2"],
-		15 : ["row4", "col3"],
+		tile1 : ["row1", "col1"],
+		tile2 : ["row1", "col2"],
+		tile3 : ["row1", "col3"],
+		tile4 : ["row1", "col4"],
+		tile5 : ["row2", "col1"],
+		tile6 : ["row2", "col2"],
+		tile7 : ["row2", "col3"],
+		tile8 : ["row2", "col4"],
+		tile9 : ["row3", "col1"],
+		tile10 : ["row3", "col2"],
+		tile11 : ["row3", "col3"],
+		tile12 : ["row3", "col4"],
+		tile13 : ["row4", "col1"],
+		tile14 : ["row4", "col2"],
+		tile15 : ["row4", "col3"],
 	}
 
 	var tiles = $(".tile");
@@ -100,26 +100,38 @@ function checkForWin() {
 	return true;
 }
 
+function clearLastGame() {
+	$(".tile").removeClass("winningboard");
+	$("#messageboard").empty();
+}
+
+function setWinningState() {
+	$(".tile").addClass("winningboard");
+	$(".tile").removeClass("moveable");
+	$("#messageboard").append("<p>YOU WIN!!</p>");
+}
+
 $(document).ready(function() {
 	// start game with an empty tile in position (4, 4)
 	var emptyTile = [4, 4];
 
 	createPuzzleBoard();
-	findMoveableTiles(emptyTile);
 
 	// shuffle puzzle board
 	$("#shufflebutton").click(function() {
+		clearLastGame();
+		findMoveableTiles(emptyTile);
 		emptyTile = shufflePuzzleboard(emptyTile);
 		$(this).addClass("shuffled");
 	})
 
 	// when a tile is clicked, move it to the location of the empty tile
-	$(".tile").click(function() {
+	$("#puzzleboard").on("click", ".moveable", function() {
 		emptyTile = swapTiles($(this), emptyTile);
 		var win = checkForWin();
 
 		if($("#shufflebutton").hasClass("shuffled") && win) {
-			$("#messageboard").append("<p>YOU WIN!!</p>");
+			setWinningState();
 		}
 	})
 })

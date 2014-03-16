@@ -10,12 +10,52 @@ body {
 }
 
 .tile {
-	height: 90px;
-	width: 90px;
-	border: 5px solid black;
+	height: 98px;
+	width: 98px;
+	border: 1px solid #FFF;
 	font-size: 40px;
 	line-height: 90px;
 	position: absolute;
+	background-image: url("img/kitten.jpg");
+	background-repeat: no-repeat;
+	transition-duration: .05s;
+}
+
+.moveable {
+	cursor: pointer;
+}
+
+.moveable:hover {
+	opacity: 0.5;
+}
+
+#shufflebutton {
+	height: 30px;
+	width: 90px;
+	border: none;
+	border-radius: 3px;
+	background-color: #008080;
+	font-size: 16px;
+	font-family: 300 'Roboto', sans-serif;
+	color: #FFF;
+	cursor: pointer;
+	box-shadow: 1px 1px 2px #777;
+}
+
+#shufflebutton:hover {
+	background-color: #1A9A9A;
+}
+
+#shufflebutton:focus {
+	outline: none;
+}
+
+#messageboard {
+	font-size: 24px;
+}
+
+.winningboard {
+	opacity: 0.5;
 }
 
 .row1 {
@@ -50,8 +90,64 @@ body {
 	left: 300px;
 }
 
-.moveable:hover {
-	border-color: red;
+#tile1 {
+	background-position: 0px 0px;
+}
+
+#tile2 {
+	background-position: -100px 0px;
+}
+
+#tile3 {
+	background-position: -200px 0px;
+}
+
+#tile4 {
+	background-position: -300px 0px;
+}
+
+#tile5 {
+	background-position: 0px -100px;
+}
+
+#tile6 {
+	background-position: -100px -100px;
+}
+
+#tile7 {
+	background-position: -200px -100px;
+}
+
+#tile8 {
+	background-position: -300px -100px;
+}
+
+#tile9 {
+	background-position: 0px -200px;
+}
+
+#tile10 {
+	background-position: -100px -200px;
+}
+
+#tile11 {
+	background-position: -200px -200px;
+}
+
+#tile12 {
+	background-position: -300px -200px;
+}
+
+#tile13 {
+	background-position: 0px -300px;
+}
+
+#tile14 {
+	background-position: -100px -300px;
+}
+
+#tile15 {
+	background-position: -200px -300px;
 }
 
 
