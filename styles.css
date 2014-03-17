@@ -1,5 +1,6 @@
 body {
 	text-align: center;
+	font-family: 'Roboto', sans-serif;
 }
 
 #puzzleboard {
@@ -36,7 +37,6 @@ body {
 	border-radius: 3px;
 	background-color: #008080;
 	font-size: 16px;
-	font-family: 300 'Roboto', sans-serif;
 	color: #FFF;
 	cursor: pointer;
 	box-shadow: 1px 1px 2px #777;
@@ -56,6 +56,11 @@ body {
 
 .winningboard {
 	opacity: 0.5;
+}
+
+#clickCounter {
+	height: 20px;
+	margin: 10px;
 }
 
 .row1 {

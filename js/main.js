@@ -111,15 +111,22 @@ function setWinningState() {
 	$("#messageboard").append("<p>YOU WIN!!</p>");
 }
 
+function setClickCounter(clickCounter) {
+	$("#clickCounter").html("Clicks: " + clickCounter)
+}
+
 $(document).ready(function() {
 	// start game with an empty tile in position (4, 4)
 	var emptyTile = [4, 4];
+	var clickCounter = 0;
 
 	createPuzzleBoard();
 
-	// shuffle puzzle board
+	// shuffle puzzle board and clear last game
 	$("#shufflebutton").click(function() {
 		clearLastGame();
+		clickCounter = 0;
+		setClickCounter(clickCounter);
 		findMoveableTiles(emptyTile);
 		emptyTile = shufflePuzzleboard(emptyTile);
 		$(this).addClass("shuffled");
@@ -129,6 +136,8 @@ $(document).ready(function() {
 	$("#puzzleboard").on("click", ".moveable", function() {
 		emptyTile = swapTiles($(this), emptyTile);
 		var win = checkForWin();
+		clickCounter++;
+		setClickCounter(clickCounter);
 
 		if($("#shufflebutton").hasClass("shuffled") && win) {
 			setWinningState();
