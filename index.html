@@ -7,17 +7,52 @@
 	<link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<div id="puzzleboard"></div>
+	<div id="controlpanel">
+		<div>
+			<h1>Select a difficulty level:</h1>
+			<form id="selectdifficultylevel">
+				<input type="radio" name="level" id="level_easy"  value="easy" checked="checked"/>
+				<label for="level_easy">easy</label><br>
+				<input type="radio" name="level" id="level_med" value="medium"/>
+				<label for="level_med">medium</label><br>
+				<input type="radio" name="level" id="level_hard" value="hard"/>
+				<label for="level_hard">hard</label><br>
 
-	<div id="clickCounter"></div>
+			</form>	
+		</div>
+
+		<div>
+			<h1>Select a photo:</h1>
+			<form id="selectphoto">
+				<input type="radio" name="photo" id="photo_apple" value="apple">
+				<label for="photo_apple">apple</label><br>
+				<input type="radio" name="photo" id="photo_kitten" value="kitten" checked="checked">
+				<label for="photo_kitten">kitten</label><br>
+				<input type="radio" name="photo" id="photo_pstew" value="patrick_stewart">
+				<label for="photo_pstew">Patrick Stewart</label><br>
+			</form>
+		</div>
+
+		<div>
+			<h1>Game Stats:</h1>
+			<div id="gamestats">
+				<div id="clickCounter">Clicks: 0</div>
+				<div id="timer">Time elapsed: 00:00</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div id="gamearea">
+		<div id="puzzleboard"></div>
+		<div><button id="shufflebutton">shuffle</button></div>
+	</div>
 
 	<div id="messageboard"></div>
 
-	<div>
-		<button id="shufflebutton">shuffle</button>
-	</div>
 
-<script src="js/jquery-2.1.0.js"></script>
-<script src="js/main.js"></script>
+	<script src="js/jquery-2.1.0.js"></script>
+	<script src="js/main.js"></script>
 </body>
 </html>

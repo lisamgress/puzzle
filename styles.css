@@ -3,10 +3,33 @@ body {
 	font-family: 'Roboto', sans-serif;
 }
 
+#controlpanel {
+	height: 400px;
+	width: 300px;
+	padding: 0 20px;
+	float: left;
+}
+
+#controlpanel h1 {
+	text-align: left;
+	font-size: 24px;
+}
+
+#selectphoto, #selectdifficultylevel, #gamestats {
+	padding-left: 10px;
+	text-align: left;
+}
+
+#gamearea {
+	width: 1100px;
+	margin: 50px auto;
+}
+
 #puzzleboard {
-	margin: 50px auto 50px auto;
 	height: 400px;
 	width: 400px;
+	margin: 0 350px;
+	padding-bottom: 20px;
 	position: relative;
 }
 
@@ -17,7 +40,6 @@ body {
 	font-size: 40px;
 	line-height: 90px;
 	position: absolute;
-	background-image: url("img/kitten.jpg");
 	background-repeat: no-repeat;
 	transition-duration: .05s;
 }
@@ -51,6 +73,7 @@ body {
 }
 
 #messageboard {
+	height: 50px;
 	font-size: 24px;
 }
 
@@ -59,6 +82,11 @@ body {
 }
 
 #clickCounter {
+	height: 20px;
+	margin: 10px;
+}
+
+#timer {
 	height: 20px;
 	margin: 10px;
 }
