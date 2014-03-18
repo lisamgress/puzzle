@@ -1,5 +1,6 @@
 var seconds;
 var timerIntervalHandle;
+var clickCounter;
 
 function createPuzzleBoard() {
 	var rowNum;
@@ -61,12 +62,12 @@ function swapTiles(tile, emptyTile) {
 	return [emptyTileRow, emptyTileCol];
 }
 
-function shufflePuzzleboard(emptyTile, numTileSwaps) {
+function shufflePuzzleboard(numTileSwaps, emptyTile) {
 	for(var i = 0; i <= numTileSwaps; i++) {
 		var neighbors = $(".moveable");
 		var randomNeighbor = neighbors[Math.floor(Math.random() * neighbors.length)];
 
-		emptyTile = swapTiles(randomNeighbor, emptyTile)
+		emptyTile = swapTiles(randomNeighbor, emptyTile);
 	}
 	return emptyTile;
 }
@@ -114,13 +115,11 @@ function setWinningState() {
 	$("#messageboard").text("YOU WIN!!");
 }
 
-function setClickCounter(clickCounter) {
+function setClickCounter() {
 	$("#clickCounter").html("Clicks: " + clickCounter);
 }
 
-
-function tick() {
-	seconds++;
+function displayTimer() {
 	var min = Math.floor(seconds / 60);
 	var sec = seconds - (min * 60);
 
@@ -129,7 +128,17 @@ function tick() {
 	min = (min < 10) ? "0" + min : min;
 
 	var timeToDisplay = min + ":" + sec;
-	$("#timer").html("Time elapsed: " + timeToDisplay);
+	$("#timer").html("Time elapsed: " + timeToDisplay);	
+}
+
+function tick() {
+	seconds++;
+	displayTimer();
+}
+
+function setTimer() {
+	seconds = 0;
+	displayTimer();
 }
 
 function startTimer() {
@@ -157,33 +166,50 @@ function setDifficultyLevel() {
 $(document).ready(function() {
 	// start game with an empty tile in position (4, 4)
 	var emptyTile = [4, 4];
-	var clickCounter = 0;
+	clickCounter = 0;
 
 	createPuzzleBoard();
 	setPhoto();
 
-	// detect photo selection
+	// detect photo selection changes
 	$("input[name='photo']").change(setPhoto);
 
-
-	// shuffle puzzle board and clear last game
+	// shuffle puzzle board
 	$("#shufflebutton").click(function() {
-		clearLastGame();
-		clickCounter = 0;
-		setClickCounter(clickCounter);
 		findMoveableTiles(emptyTile);
 		var difficultyLevel = setDifficultyLevel();
-		emptyTile = shufflePuzzleboard(emptyTile, difficultyLevel);
+		emptyTile = shufflePuzzleboard(difficultyLevel, emptyTile);
 		$(this).addClass("shuffled");
 		startTimer();
+
+		$("#shufflebutton").hide();
+		$("#resetbutton").show();
+
+		$("input[name='photo']").attr("disabled", true);
+		$("input[name='level']").attr("disabled", true);
 	})
 
-	// when a tile is clicked, move it to the location of the empty tile
+	// clear last game and reset puzzleboard
+	$("#resetbutton").click(function() {
+		clearLastGame();
+		clickCounter = 0;
+		setClickCounter();
+		setTimer();
+
+		$("#shufflebutton").show();
+		$("#resetbutton").hide();
+
+		$("input[name='photo']").attr("disabled", false);
+		$("input[name='level']").attr("disabled", false);
+	})
+
+
+	// when a tile is clicked, move it to the location of the empty tile.  check for winning board.
 	$("#puzzleboard").on("click", ".moveable", function() {
 		emptyTile = swapTiles($(this), emptyTile);
-		var win = checkForWin();
 		clickCounter++;
-		setClickCounter(clickCounter);
+		setClickCounter();
+		var win = checkForWin();
 
 		if($("#shufflebutton").hasClass("shuffled") && win) {
 			setWinningState();

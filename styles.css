@@ -52,9 +52,9 @@ body {
 	opacity: 0.5;
 }
 
-#shufflebutton {
+#shufflebutton, #resetbutton {
 	height: 30px;
-	width: 90px;
+	width: 120px;
 	border: none;
 	border-radius: 3px;
 	background-color: #008080;
@@ -62,6 +62,10 @@ body {
 	color: #FFF;
 	cursor: pointer;
 	box-shadow: 1px 1px 2px #777;
+}
+
+#resetbutton {
+	display: none;
 }
 
 #shufflebutton:hover {
