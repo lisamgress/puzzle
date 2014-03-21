@@ -194,7 +194,13 @@ $(document).ready(function() {
 		clearLastGame();
 		clickCounter = 0;
 		setClickCounter();
+		clearInterval(timerIntervalHandle);
 		setTimer();
+
+		$("#puzzleboard").empty();
+		createPuzzleBoard();
+		setPhoto();
+		emptyTile = [4, 4];
 
 		$("#shufflebutton").show();
 		$("#resetbutton").hide();
