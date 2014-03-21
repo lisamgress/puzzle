@@ -1,24 +1,42 @@
 body {
 	text-align: center;
 	font-family: 'Roboto', sans-serif;
+	color: #000;
 }
+
+/* Control Panel */
 
 #controlpanel {
 	height: 400px;
 	width: 300px;
 	padding: 0 20px;
 	float: left;
+	text-align: left;
 }
 
 #controlpanel h1 {
-	text-align: left;
 	font-size: 24px;
+	margin: 1px;
+}
+
+#controlpanel.dim {
+	color: #999;
 }
 
 #selectphoto, #selectdifficultylevel, #gamestats {
 	padding-left: 10px;
-	text-align: left;
+	margin: 25px 0;
 }
+
+#selectphoto input, #selectdifficultylevel input, #clickCounter, #timer {
+	margin-left: 10px;
+}
+
+#clickCounter, #timer {
+	height: 20px;
+}
+
+/* Game area */
 
 #gamearea {
 	width: 1100px;
@@ -53,12 +71,12 @@ body {
 }
 
 #shufflebutton, #resetbutton {
-	height: 30px;
+	height: 40px;
 	width: 120px;
 	border: none;
 	border-radius: 3px;
 	background-color: #008080;
-	font-size: 16px;
+	font-size: 18px;
 	color: #FFF;
 	cursor: pointer;
 	box-shadow: 1px 1px 2px #777;
@@ -78,22 +96,15 @@ body {
 
 #messageboard {
 	height: 50px;
-	font-size: 24px;
+	font-size: 28px;
+	margin: 35px 0;
 }
 
-.winningboard {
+.dimboard {
 	opacity: 0.5;
 }
 
-#clickCounter {
-	height: 20px;
-	margin: 10px;
-}
-
-#timer {
-	height: 20px;
-	margin: 10px;
-}
+/* Tile positions */
 
 .row1 {
 	top: 0px;
@@ -186,5 +197,3 @@ body {
 #tile15 {
 	background-position: -200px -300px;
 }
-
-
