@@ -68,11 +68,11 @@ body {
 	display: none;
 }
 
-#shufflebutton:hover {
+#shufflebutton:hover, #resetbutton:hover {
 	background-color: #1A9A9A;
 }
 
-#shufflebutton:focus {
+#shufflebutton:focus, #resetbutton:focus {
 	outline: none;
 }
 
