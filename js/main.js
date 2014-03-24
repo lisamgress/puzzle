@@ -105,12 +105,11 @@ function checkForWin() {
 }
 
 function clearLastGame() {
-	$(".tile").removeClass("winningboard");
 	$("#messageboard").empty();
 }
 
 function setWinningState() {
-	$(".tile").addClass("winningboard");
+	$(".tile").addClass("dimboard");
 	$(".tile").removeClass("moveable");
 	$("#messageboard").text("YOU WIN!!");
 }
@@ -170,6 +169,7 @@ $(document).ready(function() {
 
 	createPuzzleBoard();
 	setPhoto();
+	$("#messageboard").text("Click shuffle to play the game");
 
 	// detect photo selection changes
 	$("input[name='photo']").change(setPhoto);
@@ -181,12 +181,15 @@ $(document).ready(function() {
 		emptyTile = shufflePuzzleboard(difficultyLevel, emptyTile);
 		$(this).addClass("shuffled");
 		startTimer();
+		$("#messageboard").empty();
 
 		$("#shufflebutton").hide();
 		$("#resetbutton").show();
 
 		$("input[name='photo']").attr("disabled", true);
 		$("input[name='level']").attr("disabled", true);
+
+		$("#controlpanel").addClass("dim");
 	})
 
 	// clear last game and reset puzzleboard
@@ -202,11 +205,15 @@ $(document).ready(function() {
 		setPhoto();
 		emptyTile = [4, 4];
 
+		$("#messageboard").text("Click shuffle to play the game");
+
 		$("#shufflebutton").show();
 		$("#resetbutton").hide();
 
 		$("input[name='photo']").attr("disabled", false);
 		$("input[name='level']").attr("disabled", false);
+
+		$("#controlpanel").removeClass("dim");
 	})
 
 
