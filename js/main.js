@@ -189,7 +189,7 @@ $(document).ready(function() {
 		$("input[name='photo']").attr("disabled", true);
 		$("input[name='level']").attr("disabled", true);
 
-		$("#controlpanel").addClass("dim");
+		$("#selectdifficultylevel, #selectphoto").addClass("dim");
 	})
 
 	// clear last game and reset puzzleboard
@@ -213,7 +213,7 @@ $(document).ready(function() {
 		$("input[name='photo']").attr("disabled", false);
 		$("input[name='level']").attr("disabled", false);
 
-		$("#controlpanel").removeClass("dim");
+		$("#selectdifficultylevel, #selectphoto").removeClass("dim");
 	})
 
 
