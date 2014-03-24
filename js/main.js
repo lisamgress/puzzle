@@ -24,7 +24,7 @@ function createPuzzleBoard() {
 	}
 }
 
-function findMoveableTiles(emptyTile) {
+function findMoveableTiles() {
 	// clear any existing moveable tags
 	$(".tile").removeClass("moveable");
 
@@ -43,9 +43,9 @@ function findMoveableTiles(emptyTile) {
 	})
 }
 
-function swapTiles(tile, emptyTile) {
-	var tileRow = $(tile).attr("data-row");
-	var tileCol = $(tile).attr("data-col");
+function swapTiles(tile) {
+	var tileRow = Number($(tile).attr("data-row"));
+	var tileCol = Number($(tile).attr("data-col"));
 
 	var emptyTileRow = emptyTile[0];
 	var emptyTileCol = emptyTile[1];
@@ -56,21 +56,18 @@ function swapTiles(tile, emptyTile) {
 		$(tile).attr("class", "tile " + "row" + emptyTileRow + " " + "col" + emptyTileCol);
 		$(tile).attr("data-row", emptyTileRow);
 		$(tile).attr("data-col", emptyTileCol);
-		emptyTileRow = tileRow;
-		emptyTileCol = tileCol;
-		findMoveableTiles([emptyTileRow, emptyTileCol]);	
+		emptyTile = [tileRow, tileCol];
+		findMoveableTiles();	
 	}
-	return [emptyTileRow, emptyTileCol];
 }
 
-function shufflePuzzleboard(numTileSwaps, emptyTile) {
+function shufflePuzzleboard(numTileSwaps) {
 	for(var i = 0; i <= numTileSwaps; i++) {
 		var neighbors = $(".moveable");
 		var randomNeighbor = neighbors[Math.floor(Math.random() * neighbors.length)];
 
-		emptyTile = swapTiles(randomNeighbor, emptyTile);
+		swapTiles(randomNeighbor, emptyTile);
 	}
-	return emptyTile;
 }
 
 function checkForWin() {
@@ -127,13 +124,13 @@ function displayTimer() {
 	$("#timer").html("Time elapsed: " + timeToDisplay);	
 }
 
-function tick() {
-	seconds++;
+function setTimer() {
+	seconds = 0;
 	displayTimer();
 }
 
-function setTimer() {
-	seconds = 0;
+function tick() {
+	seconds++;
 	displayTimer();
 }
 
@@ -157,6 +154,18 @@ function setDifficultyLevel() {
 	} else {
 		return 1000;
 	}
+}
+
+function setShuffledPuzzleBoard() {
+	$("#messageboard").empty();
+	$("#puzzleboard").addClass("shuffled");
+	$("#selectdifficultylevel, #selectphoto").addClass("dim");
+
+	$("#shufflebutton").hide();
+	$("#resetbutton").show();
+
+	$("input[name='photo']").attr("disabled", true);
+	$("input[name='level']").attr("disabled", true);
 }
 
 function setPuzzleBoard() {
@@ -189,20 +198,11 @@ $(document).ready(function() {
 
 	// shuffle puzzleboard
 	$("#shufflebutton").click(function() {
-		findMoveableTiles(emptyTile);
+		findMoveableTiles();
 		var difficultyLevel = setDifficultyLevel();
-		emptyTile = shufflePuzzleboard(difficultyLevel, emptyTile);
-		$("#puzzleboard").addClass("shuffled");
+		shufflePuzzleboard(difficultyLevel);
+		setShuffledPuzzleBoard();
 		startTimer();
-		$("#messageboard").empty();
-
-		$("#shufflebutton").hide();
-		$("#resetbutton").show();
-
-		$("input[name='photo']").attr("disabled", true);
-		$("input[name='level']").attr("disabled", true);
-
-		$("#selectdifficultylevel, #selectphoto").addClass("dim");
 	})
 
 	// reset puzzleboard
@@ -210,18 +210,16 @@ $(document).ready(function() {
 		setPuzzleBoard();
 	})
 
-
-	// when a tile is clicked, move it to the location of the empty tile.  check for winning board.
+	// when a moveable tile is clicked, move it to the location of the empty tile 
 	$("#puzzleboard").on("click", ".moveable", function() {
-		emptyTile = swapTiles($(this), emptyTile);
+		swapTiles($(this));
 		clickCounter++;
 		setClickCounter();
-		var win = checkForWin();
 
-		if($("#puzzleboard").hasClass("shuffled") && win) {
+		// check for winning board
+		if($("#puzzleboard").hasClass("shuffled") && checkForWin()) {
 			setWinningState();
 			clearInterval(timerIntervalHandle);
 		}
 	})
 })
-
